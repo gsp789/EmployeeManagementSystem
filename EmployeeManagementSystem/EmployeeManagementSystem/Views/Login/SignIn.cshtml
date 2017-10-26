@@ -1,0 +1,36 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Login";
+    Layout = "_Layout";
+}
+
+<form class="form-horizontal" method="post">
+    <div class="form-group">
+
+        <label class="control-label col-sm-offset-4 col-sm-2" for="email">Username:</label>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" id="username" placeholder="Enter username" name="Username">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-offset-4 col-sm-2" for="pwd">Password:</label>
+        <div class="col-sm-2">
+            <input type="password" class="form-control" id="password" placeholder="Enter password" name="Password">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-6 col-sm-6">
+            <a href="/ForgotPassword/Index">Forgot password?</a>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-6 col-sm-6">
+            <button type="submit" class="btn btn-primary">Login</button>
+            <input name="__RequestVerificationToken" type="hidden" value="<token_generated_here>">
+            <label style="text-decoration-color:red">@ViewBag.errorMessage</label>
+
+        </div>
+    </div>
+</form>
