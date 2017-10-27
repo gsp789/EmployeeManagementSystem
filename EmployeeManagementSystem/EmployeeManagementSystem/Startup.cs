@@ -34,7 +34,8 @@ namespace EmployeeManagementSystem
             services.AddDbContext<HREmployeeManagementContext>(options => options.UseSqlServer(connection));
             services.AddMvc();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IsManager>();
+            services.AddScoped<IAuthorizationHandler, IsManager>();
+            services.AddScoped<IAuthorizationHandler, IsApprover>();
             services.AddScoped<IsApprover>();
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -44,6 +45,7 @@ namespace EmployeeManagementSystem
                 .AddCookie(options =>
                 {
                     options.LoginPath = "/Login/SignIn";
+                    options.AccessDeniedPath = "/Login/AccessDenied";
                 });
             services.AddAuthorization(options =>
             {

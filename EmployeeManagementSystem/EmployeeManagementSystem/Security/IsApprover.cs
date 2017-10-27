@@ -19,7 +19,7 @@ namespace EmployeeManagementSystem.Security
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ApproverRequirement requirement)
         {
-            var employee_email = context.User.FindFirst(ClaimTypes.NameIdentifier);
+            var employee_email = context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var employee = _context.Hremployee.FirstOrDefault(e => e.EmployeeEmail == employee_email.ToString());
             if (_context.HremployeeRole.Where(emp => emp.EmployeeId == employee.EmployeeId).Any(e => e.RoleId == 3))
             {

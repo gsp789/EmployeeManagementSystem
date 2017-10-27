@@ -9,6 +9,7 @@ using EmployeeManagementSystem.Services;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EmployeeManagementSystem.Controllers
@@ -28,9 +29,8 @@ namespace EmployeeManagementSystem.Controllers
             return View();
         }
         // GET: /<controller>/
-        [Route("signin")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> SignIn(SignInModel model)
         {
             if(ModelState.IsValid)
@@ -39,7 +39,7 @@ namespace EmployeeManagementSystem.Controllers
                 if(await _userService.ValidateCredentials(model.Username, model.Password, out employee))
                 {
                     await SignInUser(employee);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("TestEmployee");
                 }
             }
             return View(model);
@@ -57,7 +57,6 @@ namespace EmployeeManagementSystem.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
         }
 
-        [Route("accessdenied")]
         public IActionResult AccessDenied()
         {
             return View();
@@ -68,5 +67,24 @@ namespace EmployeeManagementSystem.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("SignIn");
         }
+
+        [Authorize]
+        public IActionResult TestEmployee()
+        {
+            return View();
+        }
+
+        [Authorize(Policy = "Manager")]
+        public IActionResult TestManager()
+        {
+            return View();
+        }
+
+        [Authorize(Policy = "Approver")]
+        public IActionResult TestApprover()
+        {
+            return View();
+        }
+
     }
 }

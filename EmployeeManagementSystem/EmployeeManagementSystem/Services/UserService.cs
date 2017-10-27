@@ -20,6 +20,7 @@ namespace EmployeeManagementSystem.Services
             var emp = _context.Hremployee.FirstOrDefault(e => e.EmployeeEmail == username && e.IsActive == true);
             if(emp != null)
             {
+                var hash = BCrypt.Net.BCrypt.HashPassword("Hemanth#123");
                 //BCrypt.Net.BCrypt.Verify(password, emp.password) //Verify Password
                 employee = emp;
                 return Task.FromResult(true);
