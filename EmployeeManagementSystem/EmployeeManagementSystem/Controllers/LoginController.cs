@@ -23,7 +23,6 @@ namespace EmployeeManagementSystem.Controllers
             _context = context;
             _userService = userService;
         }
-        [Route("signin")]
         public IActionResult SignIn()
         {
             return View();
@@ -51,11 +50,23 @@ namespace EmployeeManagementSystem.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, employee.EmployeeEmail),
-                new Claim("name", employee.EmployeeName)
+                new Claim("EmployeeId", employee.EmployeeId.ToString())
             };
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme, "name", null);
             var principal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+        }
+
+        [Route("accessdenied")]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> SignOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("SignIn");
         }
     }
 }

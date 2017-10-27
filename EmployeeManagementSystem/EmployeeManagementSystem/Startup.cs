@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using EmployeeManagementSystem.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using EmployeeManagementSystem.Security;
 
 namespace EmployeeManagementSystem
 {
@@ -31,6 +34,8 @@ namespace EmployeeManagementSystem
             services.AddDbContext<HREmployeeManagementContext>(options => options.UseSqlServer(connection));
             services.AddMvc();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IsManager>();
+            services.AddScoped<IsApprover>();
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -38,8 +43,20 @@ namespace EmployeeManagementSystem
             })
                 .AddCookie(options =>
                 {
-                    options.LoginPath = "/Login/signin";
+                    options.LoginPath = "/Login/SignIn";
                 });
+            services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.AddPolicy("Manager", policy => {
+                    policy.AddRequirements(new ManagerRequirement());
+                });
+                options.AddPolicy("Approver", policy => {
+                    policy.AddRequirements(new ApproverRequirement());
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,13 +67,14 @@ namespace EmployeeManagementSystem
                 app.UseDeveloperExceptionPage();
             }
             app.UseAuthentication();
+            app.UseStaticFiles();
             app.UseMvc(config =>
             {
                 config.MapRoute(
                    name: "default",
                    template: "{controller}/{action}/{id?}",
-                   defaults: new { controller = "Login", action = "Index" }
-                    );
+                   defaults: new { controller = "Login", action = "SignIn" }
+                );
             });
         }
     }
