@@ -16,8 +16,27 @@
         </div>
     </div>
     <div>
-        @RenderBody()
-
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="col-sm-2">
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="/PretravelClaim/Index">PreTravel Claim</a></li>
+                    @if (User.IsInRole("Manager"))
+                    {
+                    <li class="active"><a href="/ExpenseCreation/Index">Expense Submission</a></li>
+                    }
+                    <li><a href="#section3">Apply for leave</a></li>
+                    <li><a href="/Login/SignOut">Sign Out</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-10">
+                @RenderBody()
+            </div>
+        }
+        else
+        {
+            @RenderBody()
+        }
     </div>
     <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>

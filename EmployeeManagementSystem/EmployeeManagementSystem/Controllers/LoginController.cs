@@ -26,6 +26,10 @@ namespace EmployeeManagementSystem.Controllers
         }
         public IActionResult SignIn()
         {
+            if(User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("TestEmployee");
+            }
             return View();
         }
         // GET: /<controller>/
