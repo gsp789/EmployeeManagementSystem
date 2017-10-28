@@ -47,6 +47,7 @@ namespace EmployeeManagementSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult AddExpense(SubmitExpense model)
         {
             var employee = _context.Hremployee.FirstOrDefault(emp => emp.EmployeeEmail == User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -79,6 +80,13 @@ namespace EmployeeManagementSystem.Controllers
             }
 
             return RedirectToAction("AddExpense");
+        }
+
+        [Authorize]
+        public JsonResult GetSubCategories(int id)
+        {
+            var SubCategories = _context.HrexpenseSubCategory.Where(sc => sc.CategoryId == id).ToList();
+            return Json(SubCategories);
         }
     }
 }
