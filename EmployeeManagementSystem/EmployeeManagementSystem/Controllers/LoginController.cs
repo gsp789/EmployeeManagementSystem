@@ -28,7 +28,7 @@ namespace EmployeeManagementSystem.Controllers
         {
             if(User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("TestEmployee");
+                return RedirectToAction("Index", "ApprovedPretravelClaim");
             }
             return View();
         }
@@ -43,7 +43,7 @@ namespace EmployeeManagementSystem.Controllers
                 if(await _userService.ValidateCredentials(model.Username, model.Password, out employee))
                 {
                     await SignInUser(employee);
-                    return RedirectToAction("TestEmployee");
+                    return RedirectToAction("Index", "ApprovedPretravelClaim");
                 }
             }
             return View(model);

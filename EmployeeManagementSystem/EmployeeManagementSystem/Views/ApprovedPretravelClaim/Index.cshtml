@@ -1,0 +1,67 @@
+﻿@model IEnumerable<EmployeeDataUtil.Models.HrtravelClaim>
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/shared/_Layout.cshtml";
+}
+
+<h2>Approved Pretravel Claims</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApprovedEmployeeId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Destination)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BusinessPurpose)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status.StatusName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.EmployeeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Destination)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BusinessPurpose)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.StatusName)
+            </td>
+            <td>
+                <a href="/ApprovedPretravelClaim/AddExpense/@item.ClaimId">AddExpenses</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
