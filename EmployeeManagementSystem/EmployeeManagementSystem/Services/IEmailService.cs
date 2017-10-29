@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EmployeeDataUtil.Models;
 
 namespace EmployeeManagementSystem.Services
 {
-    public interface IUserService
+    public interface IEmailService
     {
-        Task<bool> ValidateCredentials(string username, string password, out Hruser user);
+        void PasswordRecoveryEmail(string to_address, string guid);
     }
 }

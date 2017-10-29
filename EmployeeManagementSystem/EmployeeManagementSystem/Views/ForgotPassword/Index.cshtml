@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/shared/_Layout.cshtml";
+}
+@if (ViewBag.Success != null)
+{
+    <div class="alert alert-success" role="alert">@ViewBag.Success</div>
+}
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger" role="alert">@ViewBag.Error</div>
+}
+<form class="form-horizontal" method="post">
+    <div class="form-group">
+
+        <label class="control-label col-sm-offset-4 col-sm-2" for="email">Enter your email:</label>
+        <div class="col-sm-2">
+            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-6 col-sm-6">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+

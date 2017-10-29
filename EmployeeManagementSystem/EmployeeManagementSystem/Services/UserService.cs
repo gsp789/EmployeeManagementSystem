@@ -14,16 +14,17 @@ namespace EmployeeManagementSystem.Services
         {
             _context = context;
         }
-        public Task<bool> ValidateCredentials(string username, string password, out Hremployee employee)
+        public Task<bool> ValidateCredentials(string username, string password, out Hruser user)
         {
-            employee = null;
-            var emp = _context.Hremployee.FirstOrDefault(e => e.EmployeeEmail == username && e.IsActive == true);
-            if(emp != null)
+            user = null;
+            var verifyUser = _context.Hruser.FirstOrDefault(e => e.Email == username && e.IsActive == true);
+            if(verifyUser != null)
             {
-                var hash = BCrypt.Net.BCrypt.HashPassword("Hemanth#123");
-                //BCrypt.Net.BCrypt.Verify(password, emp.password) //Verify Password
-                employee = emp;
-                return Task.FromResult(true);
+                if (BCrypt.Net.BCrypt.Verify(password, verifyUser.EmployeePassword)) //Verify Password
+                {
+                    user = verifyUser;
+                    return Task.FromResult(true);
+                }
             }
             return Task.FromResult(false);
         }

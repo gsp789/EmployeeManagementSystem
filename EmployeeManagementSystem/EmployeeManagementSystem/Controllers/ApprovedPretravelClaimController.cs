@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using EmployeeManagementSystem.Models;
 
+
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EmployeeManagementSystem.Controllers
@@ -35,7 +36,6 @@ namespace EmployeeManagementSystem.Controllers
         [Authorize]
         public IActionResult AddExpense(int id)
         {
-
             CreateExpenseModel model = new CreateExpenseModel();
             model.CategoryList = _context.HrexpenseCategory.ToList();
             model.SelectedTravelClaim = _context.HrtravelClaim.Find(id);

@@ -2,7 +2,7 @@
     $('#ExpenseCategory').on('change', function () {
         var categoryId = $(this).val();
 
-        if (categoryId != "default") {
+        if (categoryId !== "default") {
             $.ajax({
                 type: 'GET',
                 url: '/ApprovedPretravelClaim/GetSubCategories/' + categoryId,
