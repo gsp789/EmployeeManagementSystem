@@ -25,29 +25,30 @@
         </tr>
     </thead>
     <tbody>
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.SelectedTravelClaim.Destination)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.SelectedTravelClaim.BusinessPurpose)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.SelectedTravelClaim.StartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.SelectedTravelClaim.EndTime)
-                </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.SelectedTravelClaim.Destination)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.SelectedTravelClaim.BusinessPurpose)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.SelectedTravelClaim.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.SelectedTravelClaim.EndTime)
+            </td>
 
-            </tr>
+        </tr>
     </tbody>
 </table>
-<h2>Itemized Expenses</h2>
+
 @if (Model.Expenses.Count > 0)
 {
-<table class="table">
-    <thead>
-        <tr>
+    <h2>Itemized Expenses</h2>
+    <table class="table">
+        <thead>
+            <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Expenses[0].ExpenseCategory)
                 </th>
@@ -60,119 +61,135 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Expenses[0].ExpenseEndDate)
                 </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Expenses[0].ExpenseAmount)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Expenses)
-{
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpenseCategory)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpenseSubCategory)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpenseEndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpenseStartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpenseAmount)
-                @Html.DisplayFor(modelItem => item.Currency.CurrencyType)
-            </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Expenses[0].ExpenseAmount)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Expenses)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ExpenseCategory)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ExpenseSubCategory)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ExpenseEndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ExpenseStartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ExpenseAmount)
+                        @Html.DisplayFor(modelItem => item.Currency.CurrencyType)
+                    </td>
 
-        </tr>
+                </tr>
+            }
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <b>Total Expenses</b>
+                </td>
+                <td>
+                    @Model.TotalExpenses
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
-}
 
-<button type="button" class="btn btn-primary  col-sm-offset-5" data-toggle="modal" data-target="#myModal">
-    Add new expense to the claim
-</button>
-<form class="form-horizontal col-sm-offset-2" enctype="multipart/form-data" method="post">
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Make new expense claim</h5>
-                </div>
-                <input type="hidden" name="ClaimId" value="@Model.SelectedTravelClaim.ClaimId" />
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="control-label col-sm-4" for="ExpenseCategory">Select a category</label>
-                        <div class="col-sm-6">
-                            <select id="ExpenseCategory" name="ExpenseCategory" class="form-control">
-                                <option value="default">select a category</option>
-                                @foreach (var category in Model.CategoryList)
-                                {
-                                    <option value="@category.CategoryId">@category.CategoryName</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-4" for="ExpenseSubCategory">Select a sub category</label>
-                        <div class="col-sm-6">
-                            <select id="ExpenseSubCategory" name="ExpenseSubCategory" class="form-control">
-                                <option value="default">select a category</option>
-                                @foreach (var subcategory in Model.SubCategoryList)
-                                {
-                                    <option value="@subcategory.SubCategoryId">@subcategory.SubCategoryName</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-4" for="ExpenseAmount">Cost Incurred</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" id="ExpenseAmount" name="ExpenseAmount" placeholder="Amount" required />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-4" for="CurrencyId">Currency</label>
-                        <div class="col-sm-6">
-                            <select id="CurrencyId" name="CurrencyId" class="form-control">
-                                <option value="0">select the currency</option>
-                                @foreach (var currency in Model.CurrencyList)
-                                {
-                                    <option value="@currency.CurrencyId"> @currency.CurrencyType </option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-4" for="ExpenseStartDate">Start Date</label>
-                        <div class="col-sm-6">
-                            <input type="date" class="form-control" id="ExpenseStartDate" placeholder="dd/mm/yyyy" name="ExpenseStartDate" required />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-4" for="ExpenseEndDate">End Date</label>
-                        <div class="col-sm-6">
-                            <input type="date" class="form-control" id="ExpenseEndDate" placeholder="dd/mm/yyyy" name="ExpenseEndDate" required />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-4" for="Attachment">Attachment</label>
-                        <div class="col-sm-6">
-                            <input type="file" id="Attachment" name="Attachment" placeholder="choose file" />
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add expense</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
 
-<script type="text/javascript" src="~/js/subcategory.js"></script>
+                    <button type="button" class="btn btn-primary  col-sm-offset-5" data-toggle="modal" data-target="#myModal">
+                        Add new expense to the claim
+                    </button>
+                    <form class="form-horizontal col-sm-offset-2" enctype="multipart/form-data" method="post">
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Make new expense claim</h5>
+                                    </div>
+                                    <input type="hidden" name="ClaimId" value="@Model.SelectedTravelClaim.ClaimId" />
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" for="ExpenseCategory">Select a category</label>
+                                            <div class="col-sm-6">
+                                                <select id="ExpenseCategory" name="ExpenseCategory" class="form-control">
+                                                    <option value="default">select a category</option>
+                                                    @foreach (var category in Model.CategoryList)
+                                                    {
+                                                        <option value="@category.CategoryId">@category.CategoryName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" for="ExpenseSubCategory">Select a sub category</label>
+                                            <div class="col-sm-6">
+                                                <select id="ExpenseSubCategory" name="ExpenseSubCategory" class="form-control">
+                                                    <option value="default">select a category</option>
+                                                    @foreach (var subcategory in Model.SubCategoryList)
+                                                    {
+                                                        <option value="@subcategory.SubCategoryId">@subcategory.SubCategoryName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" for="ExpenseAmount">Cost Incurred</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="ExpenseAmount" name="ExpenseAmount" placeholder="Amount" required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" for="CurrencyId">Currency</label>
+                                            <div class="col-sm-6">
+                                                <select id="CurrencyId" name="CurrencyId" class="form-control">
+                                                    <option value="0">select the currency</option>
+                                                    @foreach (var currency in Model.CurrencyList)
+                                                    {
+                                                        <option value="@currency.CurrencyId"> @currency.CurrencyType </option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" for="ExpenseStartDate">Start Date</label>
+                                            <div class="col-sm-6">
+                                                <input type="date" class="form-control" id="ExpenseStartDate" placeholder="dd/mm/yyyy" name="ExpenseStartDate" required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" for="ExpenseEndDate">End Date</label>
+                                            <div class="col-sm-6">
+                                                <input type="date" class="form-control" id="ExpenseEndDate" placeholder="dd/mm/yyyy" name="ExpenseEndDate" required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" for="Attachment">Attachment</label>
+                                            <div class="col-sm-6">
+                                                <input type="file" id="Attachment" name="Attachment" placeholder="choose file" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Add expense</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <script type="text/javascript" src="~/js/subcategory.js"></script>

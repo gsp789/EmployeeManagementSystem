@@ -43,6 +43,7 @@ namespace EmployeeManagementSystem.Controllers
             model.CurrencyList = _context.Hrcurrency.ToList();
             var employee = _context.Hremployee.FirstOrDefault(emp => emp.EmployeeEmail == User.FindFirst(ClaimTypes.NameIdentifier).Value);
             model.Expenses = _context.Hrexpenses.Where(exp => exp.Claim.Employee.EmployeeEmail == employee.EmployeeEmail && exp.ClaimId == id && exp.Claim.IsActive == true).ToList();
+            model.TotalExpenses = model.Expenses.Sum(exp => exp.ExpenseAmount);
             return View(model);
         }
 

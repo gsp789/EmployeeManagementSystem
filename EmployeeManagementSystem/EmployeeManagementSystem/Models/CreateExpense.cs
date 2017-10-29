@@ -13,5 +13,6 @@ namespace EmployeeManagementSystem.Models
         public HrtravelClaim SelectedTravelClaim;
         public List<Hrcurrency> CurrencyList;
         public List<Hrexpenses> Expenses;
+        public Decimal? TotalExpenses;
     }
 }
