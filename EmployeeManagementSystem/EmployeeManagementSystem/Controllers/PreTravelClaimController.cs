@@ -110,12 +110,13 @@ namespace EmployeeManagementSystem.Controllers
             Email email = new Email();
             email.body = body;
             email.subject = String.Format("Approve Travel Claim for EmployeeId {0}", EmployeeId.ToString());
-            email.fromAddress = "";
+            email.fromAddress = "Ramireddy760@gmail.com";
             foreach(KeyValuePair<string,string> keys in empEmailDict)
             {
                 if(keys.Key == "Approver1" || keys.Key == "Approver2")
                 {
-                    email.toAddress.Add(keys.Value);
+                    if(keys.Value != null)
+                        email.toAddress.Add(keys.Value);
                 }
                 else
                 {

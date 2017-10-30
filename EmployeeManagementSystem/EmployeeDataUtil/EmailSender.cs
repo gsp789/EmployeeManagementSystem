@@ -40,7 +40,15 @@ namespace EmployeeDataUtil
                 object email1 = message;
                 MailAddress mail = new MailAddress(toMail, "Recipient");
                 message.To.Add(mail);
-                smtp.SendAsync(message, email1);
+                try
+                {
+                    smtp.SendAsync(message, email1);
+
+                }
+                catch(Exception e)
+                {
+
+                }
                 message.To.Clear();
             }
         }

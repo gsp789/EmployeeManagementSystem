@@ -78,7 +78,7 @@ namespace EmployeeManagementSystem
                 config.MapRoute(
                    name: "default",
                    template: "{controller}/{action}/{id?}",
-                   defaults: new { controller = "ForgotPassword", action = "Index" }
+                   defaults: new { controller = "Login", action = "SignIn" }
                 );
             });
         }
