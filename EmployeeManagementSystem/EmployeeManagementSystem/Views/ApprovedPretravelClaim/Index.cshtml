@@ -29,7 +29,7 @@
                 @Html.DisplayNameFor(model => model.Employee)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status.StatusName)
+                <!--Html.DisplayNameFor(model => model.Status.StatusName)-->
             </th>
             <th></th>
         </tr>
@@ -56,10 +56,10 @@
                 @Html.DisplayFor(modelItem => item.EmployeeId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status.StatusName)
+                <!--Html.DisplayFor(modelItem => item.Status.StatusName)-->
             </td>
             <td>
-                <a href="/ApprovedPretravelClaim/AddExpense/@item.ClaimId">AddExpenses</a>
+                <a class="btn btn-primary" href="/ApprovedPretravelClaim/AddExpense/@item.ClaimId">AddExpenses</a>
             </td>
         </tr>
 }
