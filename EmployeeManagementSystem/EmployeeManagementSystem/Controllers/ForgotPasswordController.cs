@@ -34,22 +34,29 @@ namespace EmployeeManagementSystem.Controllers
             var employee = _context.Hremployee.FirstOrDefault(emp => emp.EmployeeEmail == email && emp.IsActive == true);
             if (employee != null)
             {
-                var activerecoverycodes = _context.HrpasswordRecovery.Where(pr => pr.Email == email && pr.IsActive == true).ToList();
-                activerecoverycodes.ForEach(pr => pr.IsActive = false);
-                _context.HrpasswordRecovery.UpdateRange(activerecoverycodes);
-                _context.SaveChanges();
-                string guid = System.Guid.NewGuid().ToString(); ;
-                HrpasswordRecovery passwordrecovery = new HrpasswordRecovery();
-                passwordrecovery.Email = email;
-                passwordrecovery.EmployeeId = employee.EmployeeId;
-                passwordrecovery.CreatedBy = employee.EmployeeName;
-                passwordrecovery.CreatedDateTime = DateTime.Now;
-                passwordrecovery.IsActive = true;
-                passwordrecovery.LastLogedIn = DateTime.Now;
-                passwordrecovery.RecoveryCode = guid;
-                passwordrecovery.ModifiedBy = employee.EmployeeName;
-                _context.HrpasswordRecovery.Add(passwordrecovery);
-                _context.SaveChanges();
+                var passwordrecovery = _context.HrpasswordRecovery.FirstOrDefault(pr => pr.Email == email && pr.IsActive == true);
+                string guid = System.Guid.NewGuid().ToString();
+                if (passwordrecovery != null)
+                {
+                    passwordrecovery.RecoveryCode = guid;
+                    passwordrecovery.ModifiedBy = "SYSTEM";
+                    _context.HrpasswordRecovery.Update(passwordrecovery);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    passwordrecovery = new HrpasswordRecovery();
+                    passwordrecovery.Email = email;
+                    passwordrecovery.EmployeeId = employee.EmployeeId;
+                    passwordrecovery.CreatedBy = "SYSTEM";
+                    passwordrecovery.CreatedDateTime = DateTime.Now;
+                    passwordrecovery.IsActive = true;
+                    passwordrecovery.LastLogedIn = DateTime.Now;
+                    passwordrecovery.ModifiedBy = "SYSTEM";
+                    passwordrecovery.RecoveryCode = guid;
+                    _context.HrpasswordRecovery.Add(passwordrecovery);
+                    _context.SaveChanges();
+                }
                 _emailService.PasswordRecoveryEmail(email, guid);
                 ViewBag.Success = "An email has been sent to " + email + " to reset the password";
             }
@@ -81,9 +88,9 @@ namespace EmployeeManagementSystem.Controllers
             user.EmployeePassword = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
             _context.Hruser.Update(user);
             _context.SaveChanges();
-            pr.IsActive = false;
-            _context.HrpasswordRecovery.Update(pr);
-            _context.SaveChanges();
+            //pr.IsActive = false;
+            //_context.HrpasswordRecovery.Update(pr);
+            //_context.SaveChanges();
             return Json(new { success = true });
         }
     }
