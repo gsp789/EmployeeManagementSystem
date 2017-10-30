@@ -39,22 +39,22 @@ namespace EmployeeManagementSystem.Controllers
         {
             if(ModelState.IsValid)
             {
-                Hremployee employee;
-                if(await _userService.ValidateCredentials(model.Username, model.Password, out employee))
+                Hruser user;
+                if(await _userService.ValidateCredentials(model.Username, model.Password, out user))
                 {
-                    await SignInUser(employee);
+                    await SignInUser(user);
                     return RedirectToAction("Index", "ApprovedPretravelClaim");
                 }
             }
             return View(model);
         }
 
-        public async Task SignInUser(Hremployee employee)
+        public async Task SignInUser(Hruser user)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, employee.EmployeeEmail),
-                new Claim("EmployeeId", employee.EmployeeId.ToString())
+                new Claim(ClaimTypes.NameIdentifier, user.Email),
+                new Claim("EmployeeId", user.EmployeeId.ToString())
             };
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme, "name", null);
             var principal = new ClaimsPrincipal(identity);

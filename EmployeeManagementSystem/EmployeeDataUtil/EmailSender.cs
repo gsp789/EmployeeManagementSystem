@@ -14,7 +14,6 @@ namespace EmployeeDataUtil
     }
     public class EmailSender : IEmailSender
     {
-        private IConfiguration _configuration;
         public EmailSender()
         {
 

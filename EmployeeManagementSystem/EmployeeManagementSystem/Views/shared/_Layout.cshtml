@@ -6,6 +6,9 @@
     <title>Employee Management - @ViewBag.Title</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -20,9 +23,7 @@
         {
             <div class="col-sm-2">
                 <ul class="nav nav-pills nav-stacked">
-                    <li><a href="/PretravelClaim/Index">PreTravel Claim</a></li>
-                    <li class="active"><a href="/ExpenseCreation/Index">Expense Submission</a></li>
-                    <li><a href="#section3">Apply for leave</a></li>
+                    <li><a href="/ApprovedPretravelClaim/Index">Approved PreTravel Claims</a></li>
                     <li><a href="/Login/SignOut">Sign Out</a></li>
                 </ul>
             </div>
@@ -35,7 +36,5 @@
             @RenderBody()
         }
     </div>
-    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

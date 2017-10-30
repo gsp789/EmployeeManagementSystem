@@ -34,6 +34,7 @@ namespace EmployeeManagementSystem
             services.AddDbContext<HREmployeeManagementContext>(options => options.UseSqlServer(connection));
             services.AddMvc();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IAuthorizationHandler, IsManager>();
             services.AddScoped<IAuthorizationHandler, IsApprover>();
             services.AddScoped<IsApprover>();
@@ -69,13 +70,15 @@ namespace EmployeeManagementSystem
                 app.UseDeveloperExceptionPage();
             }
             app.UseAuthentication();
+            var httpContextAccessor = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
+            HelperMethods.Configure(httpContextAccessor);
             app.UseStaticFiles();
             app.UseMvc(config =>
             {
                 config.MapRoute(
                    name: "default",
                    template: "{controller}/{action}/{id?}",
-                   defaults: new { controller = "Login", action = "SignIn" }
+                   defaults: new { controller = "ForgotPassword", action = "Index" }
                 );
             });
         }

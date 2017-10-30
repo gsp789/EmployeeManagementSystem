@@ -1,2 +1,18 @@
-﻿body {
+﻿#logo {
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 20px;
+}
+
+#heading {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.sidemenu {
+    width: 100%;
+}
+
+.aligncenter {
+    text-align: center
 }

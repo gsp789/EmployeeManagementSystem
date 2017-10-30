@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using EmployeeManagementSystem.Models;
 
-
 namespace EmployeeManagementSystem.Controllers
 {
     public class ApprovedPretravelClaimController : Controller
@@ -34,7 +33,6 @@ namespace EmployeeManagementSystem.Controllers
         [Authorize]
         public IActionResult AddExpense(int id)
         {
-
             CreateExpenseModel model = new CreateExpenseModel();
             model.CategoryList = _context.HrexpenseCategory.ToList();
             model.SelectedTravelClaim = _context.HrtravelClaim.Find(id);
@@ -42,20 +40,22 @@ namespace EmployeeManagementSystem.Controllers
             model.CurrencyList = _context.Hrcurrency.ToList();
             var employee = _context.Hremployee.FirstOrDefault(emp => emp.EmployeeEmail == User.FindFirst(ClaimTypes.NameIdentifier).Value);
             model.Expenses = _context.Hrexpenses.Where(exp => exp.Claim.Employee.EmployeeEmail == employee.EmployeeEmail && exp.ClaimId == id && exp.Claim.IsActive == true).ToList();
+            model.TotalExpenses = model.Expenses.Sum(exp => exp.ExpenseAmount);
             return View(model);
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult AddExpense(SubmitExpense model)
         {
             var employee = _context.Hremployee.FirstOrDefault(emp => emp.EmployeeEmail == User.FindFirst(ClaimTypes.NameIdentifier).Value);
             Hrexpenses expenses = new Hrexpenses();
             expenses.ClaimId = model.ClaimId;
             expenses.ExpenseAmount = model.ExpenseAmount;
-            expenses.ExpenseCategory = model.ExpenseSubCategory;
+            expenses.ExpenseCategoryId = model.ExpenseCategory;
             expenses.ExpenseStartDate = model.ExpenseStartDate;
             expenses.ExpenseEndDate = model.ExpenseEndDate;
-            expenses.ExpenseSubCategory = model.ExpenseSubCategory;
+            expenses.ExpenseSubCategoryId = model.ExpenseSubCategory;
             expenses.ModifiedBy = employee.EmployeeName;
             expenses.ModifiedDate = DateTime.Now;
             expenses.CurrencyId = model.CurrencyId;
@@ -78,6 +78,13 @@ namespace EmployeeManagementSystem.Controllers
             }
 
             return RedirectToAction("AddExpense");
+        }
+
+        [Authorize]
+        public JsonResult GetSubCategories(int id)
+        {
+            var SubCategories = _context.HrexpenseSubCategory.Where(sc => sc.CategoryId == id).ToList();
+            return Json(SubCategories);
         }
     }
 }
