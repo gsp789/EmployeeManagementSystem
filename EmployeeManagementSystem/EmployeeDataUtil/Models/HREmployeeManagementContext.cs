@@ -20,13 +20,7 @@ namespace EmployeeDataUtil.Models
         public virtual DbSet<HrtravelClaim> HrtravelClaim { get; set; }
         public virtual DbSet<Hruser> Hruser { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(@"Server=LAPTOP-D8N1NPGG\MSSQLSERVER1;Database=HREmployeeManagement;Integrated Security=True;");
-            }
-        }
+        public HREmployeeManagementContext(DbContextOptions<HREmployeeManagementContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
