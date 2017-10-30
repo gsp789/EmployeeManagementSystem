@@ -20,9 +20,14 @@ namespace EmployeeDataUtil.Models
         public virtual DbSet<HrtravelClaim> HrtravelClaim { get; set; }
         public virtual DbSet<Hruser> Hruser { get; set; }
 
-        public HREmployeeManagementContext(DbContextOptions<HREmployeeManagementContext> options)
-    : base(options)
-        { }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer(@"Server=LAPTOP-D8N1NPGG\MSSQLSERVER1;Database=HREmployeeManagement;Integrated Security=True;");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -208,6 +213,21 @@ namespace EmployeeDataUtil.Models
                     .WithMany(p => p.Hrexpenses)
                     .HasForeignKey(d => d.CurrencyId)
                     .HasConstraintName("FK_HRExpenses_CurrencyId");
+
+                entity.HasOne(d => d.ExpenseCategory)
+                    .WithMany(p => p.Hrexpenses)
+                    .HasForeignKey(d => d.ExpenseCategoryId)
+                    .HasConstraintName("FK_HrExpense_CategoryId1");
+
+                entity.HasOne(d => d.ExpenseSubCategory)
+                    .WithMany(p => p.Hrexpenses)
+                    .HasForeignKey(d => d.ExpenseSubCategoryId)
+                    .HasConstraintName("FK_HrExpense_CategoryId");
+
+                entity.HasOne(d => d.Status)
+                    .WithMany(p => p.Hrexpenses)
+                    .HasForeignKey(d => d.StatusId)
+                    .HasConstraintName("FK_HrExpense_StatusId");
             });
 
             modelBuilder.Entity<HrexpensesAttachments>(entity =>
@@ -282,14 +302,7 @@ namespace EmployeeDataUtil.Models
 
             modelBuilder.Entity<HrpasswordRecovery>(entity =>
             {
-                entity.HasKey(e => e.Email);
-
                 entity.ToTable("HRPasswordRecovery");
-
-                entity.Property(e => e.Email)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .ValueGeneratedNever();
 
                 entity.Property(e => e.CreatedBy)
                     .HasMaxLength(50)
@@ -297,7 +310,10 @@ namespace EmployeeDataUtil.Models
 
                 entity.Property(e => e.CreatedDateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.LastLogedIn).HasColumnType("datetime");
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ModifiedBy)
                     .HasMaxLength(50)
@@ -376,6 +392,8 @@ namespace EmployeeDataUtil.Models
 
                 entity.Property(e => e.EndTime).HasColumnType("datetime");
 
+                entity.Property(e => e.IsClaimed).HasColumnName("Is_Claimed");
+
                 entity.Property(e => e.ModifiedBy)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -384,8 +402,13 @@ namespace EmployeeDataUtil.Models
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
 
+                entity.HasOne(d => d.ApprovedEmployee)
+                    .WithMany(p => p.HrtravelClaimApprovedEmployee)
+                    .HasForeignKey(d => d.ApprovedEmployeeId)
+                    .HasConstraintName("FK_HRTravelClaim_AppId");
+
                 entity.HasOne(d => d.Employee)
-                    .WithMany(p => p.HrtravelClaim)
+                    .WithMany(p => p.HrtravelClaimEmployee)
                     .HasForeignKey(d => d.EmployeeId)
                     .HasConstraintName("FK_HRTravelClaim_EmpId");
 

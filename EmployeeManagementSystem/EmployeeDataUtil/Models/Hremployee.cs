@@ -8,7 +8,8 @@ namespace EmployeeDataUtil.Models
         public Hremployee()
         {
             HremployeeRole = new HashSet<HremployeeRole>();
-            HrtravelClaim = new HashSet<HrtravelClaim>();
+            HrtravelClaimApprovedEmployee = new HashSet<HrtravelClaim>();
+            HrtravelClaimEmployee = new HashSet<HrtravelClaim>();
         }
 
         public int EmployeeId { get; set; }
@@ -28,6 +29,7 @@ namespace EmployeeDataUtil.Models
         public string ModifiedBy { get; set; }
 
         public ICollection<HremployeeRole> HremployeeRole { get; set; }
-        public ICollection<HrtravelClaim> HrtravelClaim { get; set; }
+        public ICollection<HrtravelClaim> HrtravelClaimApprovedEmployee { get; set; }
+        public ICollection<HrtravelClaim> HrtravelClaimEmployee { get; set; }
     }
 }

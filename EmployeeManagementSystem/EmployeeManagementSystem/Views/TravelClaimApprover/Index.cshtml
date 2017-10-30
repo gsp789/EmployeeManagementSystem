@@ -1,0 +1,43 @@
+﻿
+@model EmployeeManagementSystem.Models.TravelClaimRequestApprovalModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/shared/_Layout.cshtml";
+}
+
+<h2>Approve Travel Claim</h2>
+<div class="row" style="margin-right:5px">
+    <label>EmployeeId:</label>
+    <label>@Model.EmployeeId</label>
+</div>
+<div class="row" style="margin-right:5px">
+    <label>EmployeeName:</label>
+    <label>@Model.EmployeeName</label>
+</div>
+<div class="row"  style="margin-right:5px">
+    <label>TravelClaimId:</label>
+    <label id ="claimId" >@Model.TravelClaimId</label>
+</div>
+<div class="row" style="margin-right:5px">
+    <label>Destination:</label>
+    <label>@Model.Destination</label>
+</div>
+<div class="row" style="margin-right:5px">
+    <label>StartDate:</label>
+    <label>@Model.StartDate</label>
+</div>
+<div class="row" style="margin-right:5px">
+    <label>EndDate:</label>
+    <label>@Model.EndDate</label>
+</div>
+<div class="row" style="margin-right:5px">
+    <label>Purpose:</label>
+    <label>@Model.Purpose</label>
+</div>
+<div class="row" style="margin-right:1px">
+    <button type="button" id="approve" class="btn btn-success">Approve</button>
+    <button type="button" id="decline" class="btn btn-danger">Decline</button>
+    <button type="button" id="warning" class="btn btn-warning">Pending</button>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/Approval.js"></script>

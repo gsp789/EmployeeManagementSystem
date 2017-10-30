@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using EmployeeManagementSystem.Models;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EmployeeManagementSystem.Controllers
 {
@@ -53,7 +52,7 @@ namespace EmployeeManagementSystem.Controllers
             Hrexpenses expenses = new Hrexpenses();
             expenses.ClaimId = model.ClaimId;
             expenses.ExpenseAmount = model.ExpenseAmount;
-            expenses.ExpenseCategory = model.ExpenseCategory;
+            expenses.ExpenseCategory = model.ExpenseSubCategory;
             expenses.ExpenseStartDate = model.ExpenseStartDate;
             expenses.ExpenseEndDate = model.ExpenseEndDate;
             expenses.ExpenseSubCategory = model.ExpenseSubCategory;

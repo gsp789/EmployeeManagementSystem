@@ -8,6 +8,7 @@ namespace EmployeeDataUtil.Models
         public HrexpenseCategory()
         {
             HrexpenseSubCategory = new HashSet<HrexpenseSubCategory>();
+            Hrexpenses = new HashSet<Hrexpenses>();
         }
 
         public int CategoryId { get; set; }
@@ -21,5 +22,6 @@ namespace EmployeeDataUtil.Models
         public string AccountCode { get; set; }
 
         public ICollection<HrexpenseSubCategory> HrexpenseSubCategory { get; set; }
+        public ICollection<Hrexpenses> Hrexpenses { get; set; }
     }
 }

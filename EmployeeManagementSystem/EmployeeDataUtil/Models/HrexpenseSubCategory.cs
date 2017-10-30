@@ -5,6 +5,11 @@ namespace EmployeeDataUtil.Models
 {
     public partial class HrexpenseSubCategory
     {
+        public HrexpenseSubCategory()
+        {
+            Hrexpenses = new HashSet<Hrexpenses>();
+        }
+
         public int SubCategoryId { get; set; }
         public string SubCategoryName { get; set; }
         public string SubCategoryDescription { get; set; }
@@ -20,5 +25,6 @@ namespace EmployeeDataUtil.Models
         public DateTime? ValidFrom { get; set; }
 
         public HrexpenseCategory Category { get; set; }
+        public ICollection<Hrexpenses> Hrexpenses { get; set; }
     }
 }

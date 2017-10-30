@@ -7,6 +7,7 @@ namespace EmployeeDataUtil.Models
     {
         public Hrstatus()
         {
+            Hrexpenses = new HashSet<Hrexpenses>();
             HrtravelClaim = new HashSet<HrtravelClaim>();
         }
 
@@ -18,6 +19,7 @@ namespace EmployeeDataUtil.Models
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
 
+        public ICollection<Hrexpenses> Hrexpenses { get; set; }
         public ICollection<HrtravelClaim> HrtravelClaim { get; set; }
     }
 }

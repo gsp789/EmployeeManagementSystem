@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/shared/_Layout.cshtml";
+}
+
+<div>
+    
+    <div class="col-sm-10">
+        <h2 class="aligncenter">Pre-Approval Business Travel Request Form</h2>
+        <br />
+        <form class="form-horizontal col-sm-offset-2" method="post">
+
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="destination">Destination(s):</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="Destination" placeholder="Enter destination" name="Destination" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="purpose">Purpose of the trip:</label>
+                <div class="col-sm-6">
+                    <textarea class="form-control" rows="5" id="Purpose" placeholder="Enter business purpose" name="Purpose" required></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="startdate">Date trip to begin:</label>
+                <div class="col-sm-6">
+                    <input type="date" class="form-control" id="Startdate" placeholder="dd/mm/yyyy" name="StartDate" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="enddate">Date trip to end:</label>
+                <div class="col-sm-6">
+                    <input type="date" class="form-control" id="Enddate" placeholder="dd/mm/yyyy" name="EndDate" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="Concent" name="Concent" required>I have reviewed and agreed to comply with OMTI’s Travel Expense Reimbursement Policies and Procedures.</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
