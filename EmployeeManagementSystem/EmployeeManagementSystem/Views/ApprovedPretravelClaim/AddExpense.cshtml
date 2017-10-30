@@ -50,10 +50,10 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Expenses[0].ExpenseCategory)
+                    @Html.DisplayNameFor(model => model.Expenses[0].ExpenseCategory.CategoryName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Expenses[0].ExpenseSubCategory)
+                    @Html.DisplayNameFor(model => model.Expenses[0].ExpenseSubCategory.SubCategoryName)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Expenses[0].ExpenseStartDate)
@@ -72,10 +72,10 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ExpenseCategory)
+                        @Html.DisplayFor(modelItem => item.ExpenseCategory.CategoryName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ExpenseSubCategory)
+                        @Html.DisplayFor(modelItem => item.ExpenseSubCategory.SubCategoryName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ExpenseEndDate)
